@@ -2,13 +2,12 @@ package com.projeto.dois.webChat.util;
 
 import com.projeto.dois.webChat.models.User;
 import com.projeto.dois.webChat.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,10 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfiguration{
 
-    private UserRepository userAccountRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity https) throws Exception {
@@ -36,8 +35,7 @@ public class SecurityConfiguration {
 
                 .and().csrf().disable()
 
-                .authenticationProvider(authProvider())
-        ;
+                .authenticationProvider(authProvider());
 
         return https.build();
     }
@@ -48,7 +46,7 @@ public class SecurityConfiguration {
         authProvider.setUserDetailsService(new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                User user = userAccountRepository.findUserByUsername(username);
+                User user = userRepository.findUserByUsername(username);
                 return user;
             }
         });
