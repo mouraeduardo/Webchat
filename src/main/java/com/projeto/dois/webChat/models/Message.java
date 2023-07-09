@@ -1,7 +1,10 @@
 package com.projeto.dois.webChat.models;
 
+import com.projeto.dois.webChat.models.DTOs.SendMessageDTO;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Table(name="message")
 @Entity(name="message")
@@ -11,11 +14,25 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
-    public String message;
-    public int senderId;
-    public int receiverId;
+    private int id;
+    private String message;
 
+    @ManyToOne
+    @JoinColumn(name = "senderId", referencedColumnName = "id")
+    private User senderId;
+
+    @ManyToOne
+    @JoinColumn(name = "receiverId", referencedColumnName = "id")
+    private User receiverId;
+    private Date sendDate;
+
+    public Message(SendMessageDTO dto){
+        this.message = dto.message();
+        this.senderId = dto.senderId();
+        this.receiverId = dto.receiverId();
+        this.sendDate = dto.sendDate();
+    }
 }

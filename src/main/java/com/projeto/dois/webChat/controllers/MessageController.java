@@ -1,15 +1,13 @@
 package com.projeto.dois.webChat.controllers;
 
+import com.projeto.dois.webChat.models.DTOs.SendMessageDTO;
 import com.projeto.dois.webChat.models.Message;
 import com.projeto.dois.webChat.models.User;
 import com.projeto.dois.webChat.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,15 +23,24 @@ public class MessageController {
     }
 
     @GetMapping("/all-message")
-    public ResponseEntity getAllUsers( ) {
+    public ResponseEntity getAllMessages( ) {
         List<Message> messages = (List<Message>) repository.findAll();
 
         return ResponseEntity.ok(messages);
     }
 
-    public ResponseEntity SendMessage(@RequestBody @Validated Message data){
+    @GetMapping("/get-message")
+    public ResponseEntity GetMessageById(){
 
-        repository.save(data);
+        return ResponseEntity.ok("funciona");
+    }
+
+    @PostMapping("/send-message")
+    public ResponseEntity SendMessage(@RequestBody @Validated SendMessageDTO data){
+
+        Message message = new Message(data);
+
+        repository.save(message);
 
         return ResponseEntity.ok().build();
     }
