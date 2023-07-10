@@ -1,7 +1,7 @@
-package com.projeto.dois.webChat.util;
+package com.projeto.dois.webChat.security;
 
-import com.projeto.dois.webChat.models.User;
-import com.projeto.dois.webChat.repositories.UserRepository;
+import com.projeto.dois.webChat.model.User;
+import com.projeto.dois.webChat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

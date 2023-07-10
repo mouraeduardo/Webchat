@@ -1,8 +1,9 @@
-package com.projeto.dois.webChat.repositories;
+package com.projeto.dois.webChat.repository;
 
-import com.projeto.dois.webChat.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import com.projeto.dois.webChat.model.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {

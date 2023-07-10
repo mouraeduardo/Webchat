@@ -1,8 +1,8 @@
-package com.projeto.dois.webChat.controllers;
+package com.projeto.dois.webChat.controller;
 
 import com.projeto.dois.webChat.RequestEntitys.RequestUser;
-import com.projeto.dois.webChat.models.User;
-import com.projeto.dois.webChat.repositories.UserRepository;
+import com.projeto.dois.webChat.model.User;
+import com.projeto.dois.webChat.repository.UserRepository;
 import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

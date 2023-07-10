@@ -1,7 +1,7 @@
-package com.projeto.dois.webChat.models.DTOs;
-
-import com.projeto.dois.webChat.models.User;
+package com.projeto.dois.webChat.model.DTOs;
 
 import java.util.Date;
+
+import com.projeto.dois.webChat.model.User;
 
 public record SendMessageDTO(String message, User senderId, User receiverId, Date sendDate){ }

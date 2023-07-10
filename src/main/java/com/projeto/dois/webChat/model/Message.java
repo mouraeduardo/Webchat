@@ -1,10 +1,11 @@
-package com.projeto.dois.webChat.models;
+package com.projeto.dois.webChat.model;
 
-import com.projeto.dois.webChat.models.DTOs.SendMessageDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+
+import com.projeto.dois.webChat.model.DTOs.SendMessageDTO;
 
 @Table(name="message")
 @Entity(name="message")

@@ -1,4 +1,4 @@
-package com.projeto.dois.webChat.models;
+package com.projeto.dois.webChat.model;
 
 import com.projeto.dois.webChat.RequestEntitys.RequestUser;
 import jakarta.persistence.*;

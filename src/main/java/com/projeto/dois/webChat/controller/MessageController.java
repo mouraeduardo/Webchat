@@ -1,9 +1,9 @@
-package com.projeto.dois.webChat.controllers;
+package com.projeto.dois.webChat.controller;
 
-import com.projeto.dois.webChat.models.DTOs.SendMessageDTO;
-import com.projeto.dois.webChat.models.Message;
-import com.projeto.dois.webChat.models.User;
-import com.projeto.dois.webChat.repositories.MessageRepository;
+import com.projeto.dois.webChat.model.Message;
+import com.projeto.dois.webChat.model.User;
+import com.projeto.dois.webChat.model.DTOs.SendMessageDTO;
+import com.projeto.dois.webChat.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
