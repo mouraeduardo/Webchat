@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,11 @@ public class UserController {
 
     public UserController(UserRepository repository) {
         this.repository = repository;
+    }
+
+    @GetMapping("/me")
+    Principal getMet(Principal me){
+        return me;
     }
 
     @PostMapping ("/login")
