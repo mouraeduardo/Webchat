@@ -41,15 +41,14 @@ public class UserController {
 
         User user = repository.findUserByUsername(data.username());
 
-        String passwordEncrypt = passwordEncoder.encode(data.password());
 
-        if (user == null ){
+        if (user == null && !passwordEncoder.matches(data.password(), user.getPassword()) ){
             return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok("Login realizado com sucesso");
     }
-    
+
     @PostMapping ("/register")
     public ResponseEntity Register(@RequestBody @Validated RequestUser data){
 
