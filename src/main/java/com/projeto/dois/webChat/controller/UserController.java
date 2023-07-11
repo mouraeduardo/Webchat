@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -36,7 +37,7 @@ public class UserController {
     @PermitAll
     public ResponseEntity Login(@RequestBody @Validated RequestUser data){
 
-        User user = repository.findUserByEmail(data.email());
+        User user = repository.findUserByUsername(data.username());
         System.out.println(user);
         if (user == null || !user.getPassword().equals(data.password()) ){
             return ResponseEntity.badRequest().build();
