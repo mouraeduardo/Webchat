@@ -24,12 +24,16 @@ public class User implements UserDetails {
     private String email;
     private String username;
     private String password;
+    private String gender;
+    private String photo;
 
     public User(RequestUser requestUser){
         this.setEmail(requestUser.email());
         this.setName(requestUser.name());
         this.setUsername(requestUser.username());
         this.setPassword(requestUser.password());
+        this.setGender(requestUser.gender());
+        this.setPhoto(requestUser.photo());
     }
 
     @Override
