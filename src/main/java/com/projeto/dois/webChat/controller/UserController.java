@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -34,27 +33,28 @@ public class UserController {
     }
 
     @PostMapping ("/login")
-    @PermitAll
     public ResponseEntity Login(@RequestBody @Validated RequestUser data){
 
         User user = repository.findUserByUsername(data.username());
-        System.out.println(user);
-        if (user == null || !user.getPassword().equals(data.password()) ){
+
+        String passwordEncrypt = passwordEncoder.encode(data.password());
+
+        if (user == null ){
             return ResponseEntity.badRequest().build();
         }
-
 
         return ResponseEntity.ok("Login realizado com sucesso");
     }
 
     @PostMapping ("/register")
-    @PermitAll
     public ResponseEntity Register(@RequestBody @Validated RequestUser data){
 
         User existUser = repository.findUserByEmail(data.email());
 
         if (!data.password().equals(data.confirmPassword()) || existUser != null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest()
+                    .header("Access-Control-Allow-Origin", "http://localhost:4200/login")
+                    .body("Bad Request");
         }
 
         User user = new User(data);
@@ -73,5 +73,4 @@ public class UserController {
 
         return ResponseEntity.ok(users);
     }
-
 }

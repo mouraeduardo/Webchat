@@ -3,6 +3,7 @@ package com.projeto.dois.webChat.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.projeto.dois.webChat.model.DTOs.SendMessageDTO;
@@ -28,12 +29,11 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "receiverId", referencedColumnName = "id")
     private User receiverId;
-    private Date sendDate;
+    private LocalDateTime sendDate;
 
     public Message(SendMessageDTO dto){
         this.message = dto.message();
         this.senderId = dto.senderId();
         this.receiverId = dto.receiverId();
-        this.sendDate = dto.sendDate();
     }
 }

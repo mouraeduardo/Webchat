@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,16 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
+    @GetMapping("/messages-between-users")
+    public ResponseEntity getMessagesBetweenUsers(@RequestBody @Validated Message data) {
+        List<Message> senderMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.getSenderId(), data.getReceiverId());
+        List<Message> receiverMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.getReceiverId(), data.getSenderId());
+
+        senderMessages.addAll(receiverMessages);
+
+        return ResponseEntity.ok(senderMessages);
+    }
+
     @GetMapping("/get-message")
     public ResponseEntity GetMessageById(){
 
@@ -39,6 +50,7 @@ public class MessageController {
     public ResponseEntity SendMessage(@RequestBody @Validated SendMessageDTO data){
 
         Message message = new Message(data);
+        message.setSendDate(LocalDateTime.now());
 
         repository.save(message);
 
