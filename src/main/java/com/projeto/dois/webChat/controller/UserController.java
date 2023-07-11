@@ -67,7 +67,7 @@ public class UserController {
 
         repository.save(user);
 
-        return ResponseEntity.ok("Cadastrado com sucesso! Usuário: " + user.getUsername());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/all-users")
