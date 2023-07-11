@@ -25,16 +25,11 @@ public class SecurityConfiguration{
     public SecurityFilterChain filterChain(HttpSecurity https) throws Exception {
         https
                 .authorizeRequests()
-
                 .requestMatchers("/user/**").permitAll()
-
                 .anyRequest().authenticated()
                 .and()
-
                 .httpBasic()
-
                 .and().csrf().disable()
-
                 .authenticationProvider(authProvider());
 
         return https.build();
