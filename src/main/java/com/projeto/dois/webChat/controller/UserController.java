@@ -32,29 +32,28 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    Principal getMet(Principal me){
+    Principal getMet(Principal me) {
         return me;
     }
 
-    @PostMapping ("/login")
-    public ResponseEntity Login(@RequestBody @Validated RequestUser data){
+    @PostMapping("/login")
+    public ResponseEntity Login(@RequestBody @Validated RequestUser data) {
 
         User user = repository.findUserByUsername(data.username());
 
-
-        if (user == null && !passwordEncoder.matches(data.password(), user.getPassword()) ){
+        if (user == null && !passwordEncoder.matches(data.password(), user.getPassword())) {
             return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok("Login realizado com sucesso");
     }
 
-    @PostMapping ("/register")
-    public ResponseEntity Register(@RequestBody @Validated RequestUser data){
+    @PostMapping("/register")
+    public ResponseEntity Register(@RequestBody @Validated RequestUser data) {
 
         User existUser = repository.findUserByEmail(data.email());
 
-        if (!data.password().equals(data.confirmPassword()) || existUser != null){
+        if (!data.password().equals(data.confirmPassword()) || existUser != null) {
             return ResponseEntity.badRequest()
                     .header("Access-Control-Allow-Origin", "http://localhost:4200/login")
                     .body("Bad Request");
@@ -71,9 +70,26 @@ public class UserController {
     }
 
     @GetMapping("/all-users")
-    public ResponseEntity getAllUsers( ) {
+    public ResponseEntity getAllUsers() {
         List<User> users = (List<User>) repository.findAll();
 
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity getUserByUsername(@PathVariable String username) {
+        User user = repository.findUserByUsername(username);
+
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/search-users")
+    public ResponseEntity<List<User>> searchUsers(@RequestParam String keyword) {
+        List<User> users = repository.findByKeyword(keyword);
         return ResponseEntity.ok(users);
     }
 }
