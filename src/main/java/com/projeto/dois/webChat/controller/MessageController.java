@@ -11,6 +11,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -47,7 +49,9 @@ public class MessageController {
         List<Message> senderMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.senderId(), data.receiverId());
         List<Message> receiverMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.receiverId(), data.senderId());
 
+
         senderMessages.addAll(receiverMessages);
+        Collections.sort(senderMessages, Comparator.comparingInt(Message::getId));
 
         return ResponseEntity.ok(senderMessages);
     }
