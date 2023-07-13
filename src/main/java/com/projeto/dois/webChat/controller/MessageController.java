@@ -2,6 +2,7 @@ package com.projeto.dois.webChat.controller;
 
 import com.projeto.dois.webChat.model.Message;
 import com.projeto.dois.webChat.model.User;
+import com.projeto.dois.webChat.model.DTOs.GetMessagesDTO;
 import com.projeto.dois.webChat.model.DTOs.SendMessageDTO;
 import com.projeto.dois.webChat.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/message")
 public class MessageController {
 
@@ -30,10 +32,20 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
-    @GetMapping("/messages-between-users")
-    public ResponseEntity getMessagesBetweenUsers(@RequestBody @Validated Message data) {
-        List<Message> senderMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.getSenderId(), data.getReceiverId());
-        List<Message> receiverMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.getReceiverId(), data.getSenderId());
+    /*@GetMapping("/messages-between-users")
+    public ResponseEntity getMessagesBetweenUsers(@RequestBody @Validated GetMessagesDTO data) {
+        List<Message> senderMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.senderId(), data.receiverId());
+        List<Message> receiverMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.receiverId(), data.senderId());
+
+        senderMessages.addAll(receiverMessages);
+
+        return ResponseEntity.ok(senderMessages);
+    }*/
+
+    @PostMapping("/messages-between-users")
+     public ResponseEntity<List<Message>> getMessagesBetweenUsers(@RequestBody GetMessagesDTO data) {    
+        List<Message> senderMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.senderId(), data.receiverId());
+        List<Message> receiverMessages = (List<Message>) repository.findMessageBySenderIdAndReceiverId(data.receiverId(), data.senderId());
 
         senderMessages.addAll(receiverMessages);
 

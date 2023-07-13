@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.projeto.dois.webChat.model.DTOs.GetMessagesDTO;
 import com.projeto.dois.webChat.model.DTOs.SendMessageDTO;
 
 @Table(name="message")
@@ -36,4 +37,9 @@ public class Message {
         this.senderId = dto.senderId();
         this.receiverId = dto.receiverId();
     }
+
+    /*public Message(GetMessagesDTO dto){
+        this.senderId = dto.senderId();
+        this.receiverId = dto.receiverId();
+    }*/
 }

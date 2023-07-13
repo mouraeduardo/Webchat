@@ -26,6 +26,7 @@ public class SecurityConfiguration{
         https
                 .authorizeRequests()
                 .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/message/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
